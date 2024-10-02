@@ -1,194 +1,312 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
+    "title": "API TariffPro",
+    "version": "2.0.0",
+    "description": "This documentation provides details on how to use the TariffPro Customs Classifier API to classify images, texts, PDF files, and Excel files into Mexican tariff fractions."
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
+      "url": "https://pyapi.camtomx.com"
     }
   ],
   "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
+    "/api/v3/tariffpro/text": {
+      "post": {
+        "summary": "Text Classification",
+        "description": "Tariff classification based on text",
+        "operationId": "classifyTextAndImage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "product_description": {
+                    "type": "string",
+                    "example": "silk waste"
+                  }
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
-            "name": "limit",
+            "name": "user_identifier",
             "in": "query",
-            "description": "The maximum number of results to return",
+            "required": false,
             "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
+              "type": "string"
+            },
+            "description": "A unique identifier set by the developer to track which user or entity is using the API key."
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Tariff suggestions",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Plant"
+                    "type": "object",
+                    "properties": {
+                      "chapter": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "heading": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "subheading": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "fraction": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "fraction_and_nico": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "overall_confidence": {
+                        "type": "number",
+                        "example": 92.23
+                      }
+                    }
                   }
                 }
               }
             }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
           }
-        }
-      },
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v3/tariffpro/image": {
       "post": {
-        "description": "Creates a new plant in the store",
+        "summary": "Image Classification",
+        "description": "Tariff Classification based on a image",
+        "operationId": "classifyPDF",
         "requestBody": {
-          "description": "Plant to add to the store",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+                "type": "object",
+                "properties": {
+                  "img_url": {
+                    "type": "string",
+                    "example": "https://img-example-url.jpeg"
+                  }
                 }
               }
             }
           }
-        }
-      }
-    },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+        },
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
+            "name": "user_identifier",
+            "in": "query",
+            "required": false,
             "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+              "type": "string"
+            },
+            "description": "A unique identifier set by the developer to track which user or entity is using the API key."
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Tariff suggestions",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "chapter": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "heading": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "subheading": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "fraction": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "fraction_and_nico": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "overall_confidence": {
+                        "type": "number",
+                        "example": 92.23
+                      }
+                    }
+                  }
                 }
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v3/tariffpro/text-and-image": {
+      "post": {
+        "summary": "Image and Text Classification",
+        "description": "Classifies a product based on both Image and Text, which complement each other.",
+        "operationId": "classifyExcel",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "product_description": {
+                    "type": "string",
+                    "example": "silk waste"
+                  },
+                  "img_url": {
+                    "type": "string",
+                    "example": "https://img-example-url.jpeg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_identifier",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A unique identifier set by the developer to track which user or entity is using the API key."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tariff suggestions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "chapter": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "heading": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "subheading": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "fraction": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "fraction_and_nico": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "overall_confidence": {
+                        "type": "number",
+                        "example": 92.23
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     }
   },
   "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "securitySchemes": {
-      "bearerAuth": {
+      "BearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

@@ -1,33 +1,23 @@
----
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
----
+Camtom offers an API solution specifically designed for US and Mexico customs brokers, enhancing operational efficiency through advanced AI tools. Currently, our available product for integration is **TariffPro**. To obtain an API key, [Book a Demo](https://www.camtomx.com/for-enterprises/book-a-demo) or send us a [WhatsApp](https://wa.me/529991583387).
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## TariffPro Endpoints
 
-## Welcome
+### Response Format
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+All TariffPro endpoints share a consistent response format, which will be defined in the corresponding documentation.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+### Query Parameter
+
+Each endpoint includes a common query parameter called `user_identifier`. This parameter allows developers to pass a unique identifier for each user, facilitating the tracking of API usage through Camtom's KPIs. This helps gain valuable insights into each user's interaction with the API.
+
+### Error Messages
+
+In situations where the TariffPro endpoints do not find a product due to vague descriptions, the response will indicate: 
+> "Product not found; please try with another description or format."
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All API endpoints require authentication via Bearer tokens, as specified in the API documentation.
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+"Authentication": "Bearer <token>"
