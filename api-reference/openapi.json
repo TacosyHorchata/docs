@@ -299,6 +299,102 @@
           }
         ]
       }
+    },
+    "/api/v3/tariffpro/pdf": {
+      "post": {
+        "summary": "PDF Datasheet Classification",
+        "description": "Classifies a product based on a datasheet PDF. Supports one product at a time.",
+        "operationId": "classifyPDF",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The path to the PDF datasheet file to classify"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_identifier",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A unique identifier set by the developer to track which user or entity is using the API key."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tariff suggestions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "chapter": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "heading": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "subheading": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "fraction": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "fraction_and_nico": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      },
+                      "overall_confidence": {
+                        "type": "number",
+                        "example": 92.23
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {

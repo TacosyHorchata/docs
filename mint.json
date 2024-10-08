@@ -56,7 +56,8 @@
       "pages": [
         "api-reference/endpoint/image",
         "api-reference/endpoint/text",
-        "api-reference/endpoint/text & image"
+        "api-reference/endpoint/text & image",
+        "api-reference/endpoint/pdf"
       ]
     },
     {
